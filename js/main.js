@@ -1,4 +1,4 @@
-var TetrisSettingManager = function () {
+var TetrisGameManager = function () {
 
     var CLASS_SHAPE = 'shape'
         , WIDTH = 10
@@ -10,13 +10,12 @@ var TetrisSettingManager = function () {
         , ROTATION_SEPERATOR = '|';
 
     var score = 0
-        , position = []
-        , shapeType = 0
-        , rotation = 0
+        , currentBlockPosition = []
+        , currentBlockShapeType = 0
+        , currentBlockRotation = 0
         , xMax = 0
         , yMax = 0
-        , timeOut
-        , tetrisBoard = document.getElementById(ID_TABLE);
+        , timeOut;
 
     var getNumberOfShapeType = function () {
         return SHAPE.split(SHAPE_SEPERATOR).length;
@@ -24,6 +23,24 @@ var TetrisSettingManager = function () {
 
     var getShapeClassNames = function () {
         return new Array(getNumberOfShapeType()).fill().map(function (_, index) { return CLASS_SHAPE + (index + 1); });
+    }
+
+    var getRandomBlockShapeType = function () {
+        return Math.floor(Math.random() * getNumberOfShapeType());
+    }
+
+    var getShape = function (shape, rotation) {
+        return shape.split(SHAPE_SEPERATOR)[shape].split(ROTATION_SEPERATOR)[rotation].split(',');
+    }
+
+    var render = function () {
+        length = getShape(currentBlockShapeType, currentBlockRotation).length;
+        for (var i = 0; i < length; i++) {
+            yS = getShape(currentBlockShapeType, currentBlockRotation)[i].substring(0, 1);
+            xS = getShape(currentBlockShapeType, currentBlockRotation)[i].substring(1, 2);
+            y = currentBlockPosition[0] + parseInt(yS, 10);
+            x = currentBlockPosition[1] + parseInt(xS, 10);
+        }
     }
 
     this.drawCell = function (tableElement) {
@@ -41,8 +58,18 @@ var TetrisSettingManager = function () {
         }
     }
 
+    this.makeBlock = function () {
+        var initialBlockPosition = [0, Math.floor(WIDTH / 2 - 1)];
+        currentBlockPosition = initialBlockPosition;
+        currentBlockShapeType = getRandomBlockShapeType();
+        currentBlockRotation = 0;
+        yMax = parseInt(getMx(currentBlockShapeType, currentBlockRotation)[0]);
+        xMax = parseInt(getMx(currentBlockShapeType, currentBlockRotation)[1]);
+        render(currentBlockPosition, currentBlockShapeType, currentBlockRotation);
+        // timeOut = setTimeout(function () { goDown(); }, vel);
+    }
 }
 
-var tetrisSettingManager = new TetrisSettingManager();
+var tetrisGameManager = new TetrisGameManager();
 var tetrisBoard = document.getElementById('tetris-board');
-tetrisSettingManager.drawCell(tetrisBoard);
+tetrisGameManager.drawCell(tetrisBoard);
