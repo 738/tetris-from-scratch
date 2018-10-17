@@ -43,6 +43,18 @@ var TetrisGameManager = function () {
         }
     }
 
+    var getMaxPoint = function () {
+
+    }
+
+    var erase = function () {
+
+    }
+
+    var checkFull = function () {
+
+    }
+
     this.drawCell = function (tableElement) {
         var row = new Array(HEIGHT);
         var cell = new Array(HEIGHT);
@@ -63,13 +75,64 @@ var TetrisGameManager = function () {
         currentBlockPosition = initialBlockPosition;
         currentBlockShapeType = getRandomBlockShapeType();
         currentBlockRotation = 0;
-        yMax = parseInt(getMx(currentBlockShapeType, currentBlockRotation)[0]);
-        xMax = parseInt(getMx(currentBlockShapeType, currentBlockRotation)[1]);
+        yMax = parseInt(getMaxPoint(currentBlockShapeType, currentBlockRotation)[0]);
+        xMax = parseInt(getMaxPoint(currentBlockShapeType, currentBlockRotation)[1]);
         render(currentBlockPosition, currentBlockShapeType, currentBlockRotation);
         // timeOut = setTimeout(function () { goDown(); }, vel);
     }
+
+    this.rotateBlock = function () {
+
+    }
+
+    this.moveBlockRight = function () {
+
+    }
+
+    this.moveBlockLeft = function () {
+
+    }
+
+    this.moveBlockDown = function () {
+
+    }
+
+    this.moveBlockDownQuick = function () {
+
+    }
+
+
+
+
 }
+
+var KEYCODE_LEFT = 37;
+var KEYCODE_RIGHT = 39;
+var KEYCODE_DOWN = 40;
+var KEYCODE_UP = 38;
 
 var tetrisGameManager = new TetrisGameManager();
 var tetrisBoard = document.getElementById('tetris-board');
 tetrisGameManager.drawCell(tetrisBoard);
+
+document.onkeydown = function (e) {
+    if (e.keyCode == KEYCODE_LEFT)
+        tetrisGameManager.moveBlockLeft();
+    else if (e.keyCode == KEYCODE_RIGHT)
+        tetrisGameManager.moveBlockRight();
+    else if (e.keyCode == KEYCODE_DOWN)
+        tetrisGameManager.moveBlockDownQuick();
+    else if (e.keyCode == KEYCODE_UP)
+        tetrisGameManager.rotateBlock();
+}
+
+document.onkeydown = function () {
+    if (event.keyCode == KEYCODE_LEFT)
+        tetrisGameManager.moveBlockLeft();
+    else if (event.keyCode == KEYCODE_RIGHT)
+        tetrisGameManager.moveBlockRight();
+    else if (event.keyCode == KEYCODE_DOWN)
+        tetrisGameManager.moveBlockDownQuick();
+    else if (event.keyCode == KEYCODE_UP)
+        tetrisGameManager.rotateBlock();
+}

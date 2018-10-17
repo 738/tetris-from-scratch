@@ -6,6 +6,7 @@ table#tetris-board {
 #tetris-board tr, #tetris-board td{
     width: 15px;
     height: 15px;
+    border: 0.5px solid black;
 }
 
 .shape1 {
